@@ -1,0 +1,323 @@
+<!doctype html> 
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>CRM Mechanical Checklist</title>
+<style>
+  :root{
+    --vh: 1vh;
+    --bg-dark: #071021;
+    --card: rgba(255,255,255,0.06);
+    --btn-blue-start: #007bff;
+    --btn-blue-end: #0056d6;
+    --glass: rgba(255,255,255,0.06);
+    --radius: 1.2vmin;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;}
+  body{
+    background: var(--bg-dark);
+    color:#fff;
+    overflow:hidden;
+  }
+
+  /* Header */
+  header{
+    background: #fff;
+    color: #0b2640;
+    display:flex;
+    align-items:center;
+    justify-content:space-between; /* brand left, clock right */
+    gap: 2vmin;
+    padding: calc(var(--vh) * 1) calc(var(--vh) * 1.6);
+    box-shadow: 0 6px 18px rgba(2,6,23,0.08);
+  }
+  .brand{display:flex;align-items:center;gap:1.2vmin;min-width:0}
+  .brand img{height: calc(var(--vh) * 3); width:auto; display:block}
+  .brand .title{font-weight:700;font-size: clamp(1.6vmin, 2.4vmin, 3.6vmin); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+
+  /* Clock in header */
+  .header-clock {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: calc(var(--vh) * 0.2);
+  }
+  .header-clock .date {
+    font-family: 'Courier New', monospace;
+    font-weight: 700;
+    font-size: clamp(1.4vmin, 1.8vmin, 2.2vmin);
+    color: #0b2640;
+    letter-spacing: 0.05em;
+  }
+  .header-clock .time {
+    font-family: 'Courier New', monospace;
+    font-weight: 900;
+    color: #0b2640;
+    background: none;
+    padding: 0;
+    border-radius: 0;
+    font-size: clamp(1.6vmin, 2.2vmin, 2.8vmin);
+    display: inline-flex;
+    gap: calc(var(--vh) * 0.2);
+    align-items: center;
+    box-shadow: none;
+  }
+  .header-clock .time .colon { animation: blinkColon 1s steps(1,end) infinite; }
+  @keyframes blinkColon { 50%{opacity:0} }
+
+  /* HERO area */
+  .hero{
+    position:relative;
+    height: calc(100vh - (var(--vh) * 8));
+    background-image: url('banner.jpg');
+    background-size: cover;
+    background-position: center;
+    display:grid;
+    grid-template-rows: 0.18fr 0.52fr 0.30fr;
+    align-items:center;
+    justify-items:center;
+    padding: calc(var(--vh) * 1.2);
+  }
+  .hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background: linear-gradient(180deg, rgba(2,6,23,0.35), rgba(2,6,23,0.45));
+    z-index:0;
+  }
+  .hero > * { position:relative; z-index:1; }
+
+  .main-title{
+    font-weight:800;
+    text-align:center;
+    margin:0;
+    padding:0 calc(var(--vh) * 1);
+    font-size: clamp(3vmin, 6vmin, 9vmin);
+    line-height:1;
+  }
+
+  /* Visual row */
+  .visual {
+    width:100%;
+    display:flex;
+    gap: calc(var(--vh) * 2.2);
+    align-items:center;
+    justify-content:center;
+    flex-wrap:wrap;
+    padding: 0 calc(var(--vh) * 1);
+  }
+
+  /* Pie */
+  .pie {
+    width: clamp(18vmin, 30vmin, 40vmin);
+    height: clamp(18vmin, 30vmin, 40vmin);
+    border-radius:50%;
+    background: conic-gradient(#0f1724 0deg 120deg, #1b2430 120deg 240deg, #2b3948 240deg 360deg);
+    display:grid;
+    place-items:center;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.5), inset 0 -8px 24px rgba(255,255,255,0.02);
+    animation: spin 3s linear infinite;
+    flex: 0 0 auto;
+  }
+  @keyframes spin{ from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+
+  .pie .label {
+    position:absolute;
+    color:#fff;
+    font-weight:800;
+    text-shadow:0 3px 10px rgba(0,0,0,0.6);
+    font-size: clamp(1.6vmin, 2.4vmin, 4vmin);
+    pointer-events:none;
+  }
+  .label.a{ top:12%; left:50%; transform:translate(-50%,-20%); }
+  .label.b{ right:12%; top:50%; transform:translate(20%,-50%); }
+  .label.c{ left:50%; bottom:12%; transform:translate(-50%,20%); }
+
+  /* MECH2 buttons */
+  .mech2 {
+    display:flex;
+    gap: calc(var(--vh) * 1.2);
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+  }
+  @media(min-width:900px){
+    .mech2{ flex-direction:row; }
+  }
+  .mech-btn {
+    background: linear-gradient(135deg, var(--btn-blue-start), var(--btn-blue-end));
+    color:#fff;
+    padding: calc(var(--vh) * 1.2) calc(var(--vh) * 2.4);
+    border-radius: calc(var(--vh) * 1.2);
+    font-weight:800;
+    font-size: clamp(1.8vmin, 2.6vmin, 4vmin);
+    min-width: calc(var(--vh) * 14);
+    text-align:center;
+    border: none;
+    cursor:pointer;
+    box-shadow: 0 14px 40px rgba(0,0,0,0.45);
+    transition: transform .18s ease, box-shadow .18s ease;
+  }
+  .mech-btn:active{ transform: translateY(2%); }
+  .mech-btn:focus{ outline: 3px solid rgba(0,123,255,0.3); outline-offset: 3px; }
+
+  /* Shift panel */
+  .shift-panel {
+    position: absolute;
+    bottom: calc(var(--vh) * 2.4);
+    left: 50%;
+    transform: translateX(-50%) translateY(100%);
+    width: min(92vw, 1000px);
+    background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+    border-radius: calc(var(--vh) * 1.2);
+    padding: calc(var(--vh) * 1.2);
+    box-shadow: 0 18px 50px rgba(0,0,0,0.6);
+    display:flex;
+    gap: calc(var(--vh) * 1);
+    align-items:center;
+    justify-content:center;
+    flex-wrap:wrap;
+    z-index: 5;
+    transition: transform 380ms cubic-bezier(.22,.9,.32,1), opacity 260ms;
+    opacity:0;
+    pointer-events:none;
+  }
+  .shift-panel.open {
+    transform: translateX(-50%) translateY(0%);
+    opacity:1;
+    pointer-events:auto;
+  }
+
+  .shift-btn {
+    background: linear-gradient(135deg,#14a44d,#066a2e);
+    color:#fff;
+    padding: calc(var(--vh) * 0.9) calc(var(--vh) * 2.2);
+    border-radius: calc(var(--vh) * 1);
+    font-weight:800;
+    font-size: clamp(1.6vmin, 2.2vmin, 3.2vmin);
+    border: none;
+    cursor:pointer;
+    min-width: calc(var(--vh) * 11);
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.45);
+    transition: transform 140ms;
+  }
+  .shift-btn:hover{ transform: translateY(-6%); }
+  .shift-close {
+    background: linear-gradient(135deg,#e53e3e,#a02a2a);
+  }
+
+  @media(max-height:520px){
+    header{ padding:6px 8px }
+    .main-title{ font-size: clamp(2.2vmin, 3.6vmin, 5vmin) }
+  }
+  @media(max-width:640px){
+    .visual{ gap: calc(var(--vh) * 1.1); flex-direction:column-reverse;}
+    .mech2{ flex-direction:column; gap: calc(var(--vh)*0.8); }
+    .shift-panel{ bottom: calc(var(--vh) * 1.6); padding: calc(var(--vh) * 0.9);}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand" role="banner">
+    <img src="logo.png" alt="HAPL Logo" />
+    <div class="title">CRM Mechanical Checklist</div>
+  </div>
+  <div class="clock header-clock" aria-live="polite">
+    <div class="date" id="dateText">MM.DD.YYYY</div>
+    <div class="time" id="timeBox"><span id="hhmm">00:00</span><span class="colon">:</span><span id="ss">00</span></div>
+  </div>
+</header>
+
+<section class="hero" role="main" aria-label="Checklist dashboard">
+
+  <h1 class="main-title">Ready to fill up the checklist</h1>
+
+  <div class="visual" aria-hidden="false">
+
+    <div class="pie" aria-hidden="true" role="img" aria-label="Rotating pie chart for shifts">
+      <div class="label a">A</div>
+      <div class="label b">B</div>
+      <div class="label c">C</div>
+    </div>
+
+    <div class="mech2" aria-label="Select plant">
+      <button class="mech-btn" data-plant="HAPL" id="btnHAPL">HAPL</button>
+      <button class="mech-btn" data-plant="CAPL" id="btnCAPL">CAPL</button>
+    </div>
+  </div>
+
+  <div id="shiftPanel" class="shift-panel" role="dialog" aria-modal="true" aria-hidden="true">
+  </div>
+
+</section>
+
+<script>
+  function setVh(){ document.documentElement.style.setProperty('--vh', window.innerHeight * 0.01 + 'px'); }
+  setVh();
+  window.addEventListener('resize', setVh);
+
+  function pad(n){ return n < 10 ? '0'+n : n; }
+  function updateClock(){
+    const now = new Date();
+    const mm = pad(now.getMonth()+1), dd = pad(now.getDate()), yyyy = now.getFullYear();
+    const hh = pad(now.getHours()), min = pad(now.getMinutes()), ss = pad(now.getSeconds());
+    document.getElementById('dateText').textContent = `${mm}.${dd}.${yyyy}`;
+    document.getElementById('hhmm').textContent = `${hh}:${min}`;
+    document.getElementById('ss').textContent = ss;
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  const panel = document.getElementById('shiftPanel');
+  const LINKS = {
+    HAPL: {
+      A: 'https://forms.office.com/Pages/ResponsePage.aspx?id=PIcGlfc2dUG6n9afC2Arg8z21hqHuwhAi2nAEngdb9tURUdBNlNVT1VCVjBCUzFXMlA2UVNSSVNHSS4u', B: 'LINK_HAPL_B', C: 'LINK_HAPL_C', RESP: 'https://jindalstainless0-my.sharepoint.com/:x:/g/personal/abhishek_dadsena_jindalstainless_com/EdfbzTbFciBEgiDAjb8Rm4sBlAa8koVDHu6CmHhgCQ4fqQ?e=dDv4I4'
+    },
+    CAPL: {
+      A: 'LINK_CAPL_A', B: 'LINK_CAPL_B', C: 'LINK_CAPL_C', RESP: 'LINK_CAPL_RESP'
+    }
+  };
+
+  function openShiftPanel(plant){
+    panel.innerHTML = `
+      <div style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:1vmin;flex-wrap:wrap">
+        <div style="font-weight:800;font-size:clamp(1.6vmin,2.2vmin,3.2vmin)"> ${plant} - Select Shift </div>
+        <div style="display:flex;gap:1vmin;flex-wrap:wrap;justify-content:center">
+          <a class="shift-btn" href="${LINKS[plant].A}" target="_blank" rel="noopener">A SHIFT</a>
+          <a class="shift-btn" href="${LINKS[plant].B}" target="_blank" rel="noopener">B SHIFT</a>
+          <a class="shift-btn" href="${LINKS[plant].C}" target="_blank" rel="noopener">C SHIFT</a>
+          <a class="shift-btn" href="${LINKS[plant].RESP}" target="_blank" rel="noopener">RESPONSES</a>
+          <button class="shift-btn shift-close" id="closePanel">BACK</button>
+        </div>
+      </div>
+    `;
+    panel.classList.add('open');
+    panel.setAttribute('aria-hidden','false');
+    document.getElementById('closePanel').addEventListener('click', closeShiftPanel);
+  }
+
+  function closeShiftPanel(){
+    panel.classList.remove('open');
+    panel.setAttribute('aria-hidden','true');
+    setTimeout(()=>{ panel.innerHTML = ''; }, 420);
+  }
+
+  document.getElementById('btnHAPL').addEventListener('click', ()=> openShiftPanel('HAPL'));
+  document.getElementById('btnCAPL').addEventListener('click', ()=> openShiftPanel('CAPL'));
+  window.addEventListener('keydown',(e)=>{ if(e.key === 'Escape') closeShiftPanel(); });
+
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    document.querySelectorAll('.pie').forEach(el=> el.style.animation='none');
+    document.querySelectorAll('.mech-btn, .shift-btn').forEach(el=> el.style.transition='none');
+    document.querySelectorAll('.time .colon').forEach(el=> el.style.animation='none');
+  }
+</script>
+</body>
+</html>
