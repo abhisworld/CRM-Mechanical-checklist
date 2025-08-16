@@ -1,9 +1,9 @@
-<!doctype html> 
+<!doctype html>   
 <html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>CRM Mechanical Checklist</title>
+<title> www.hapl-mechanical.com </title>
 <style>
   :root{
     --vh: 1vh;
@@ -15,11 +15,19 @@
     --radius: 1.2vmin;
   }
   *{box-sizing:border-box}
-  html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;}
+  html,body{
+    height:100%;
+    width:100%;
+    margin:0;
+    padding:0;
+    font-family:Inter,system-ui,Segoe UI,Roboto,Arial;
+  }
   body{
     background: var(--bg-dark);
     color:#fff;
     overflow:hidden;
+    min-height:100vh;
+    min-width:100vw;
   }
 
   /* Header */
@@ -28,16 +36,17 @@
     color: #0b2640;
     display:flex;
     align-items:center;
-    justify-content:space-between; /* brand left, clock right */
+    justify-content:space-between;
     gap: 2vmin;
     padding: calc(var(--vh) * 1) calc(var(--vh) * 1.6);
     box-shadow: 0 6px 18px rgba(2,6,23,0.08);
+    flex-wrap: wrap;
   }
   .brand{display:flex;align-items:center;gap:1.2vmin;min-width:0}
   .brand img{height: calc(var(--vh) * 3); width:auto; display:block}
   .brand .title{font-weight:700;font-size: clamp(1.6vmin, 2.4vmin, 3.6vmin); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
 
-  /* Clock in header */
+  /* Clock */
   .header-clock {
     display: flex;
     flex-direction: column;
@@ -49,28 +58,26 @@
     font-weight: 700;
     font-size: clamp(1.4vmin, 1.8vmin, 2.2vmin);
     color: #0b2640;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
   .header-clock .time {
     font-family: 'Courier New', monospace;
     font-weight: 900;
     color: #0b2640;
-    background: none;
-    padding: 0;
-    border-radius: 0;
     font-size: clamp(1.6vmin, 2.2vmin, 2.8vmin);
     display: inline-flex;
     gap: calc(var(--vh) * 0.2);
     align-items: center;
-    box-shadow: none;
   }
   .header-clock .time .colon { animation: blinkColon 1s steps(1,end) infinite; }
   @keyframes blinkColon { 50%{opacity:0} }
 
-  /* HERO area */
+  /* Hero */
   .hero{
     position:relative;
     height: calc(100vh - (var(--vh) * 8));
+    width:100%;
     background-image: url('banner.jpg');
     background-size: cover;
     background-position: center;
@@ -94,7 +101,7 @@
     margin:0;
     padding:0 calc(var(--vh) * 1);
     font-size: clamp(3vmin, 6vmin, 9vmin);
-    line-height:1;
+    line-height:1.2;
   }
 
   /* Visual row */
@@ -117,24 +124,12 @@
     display:grid;
     place-items:center;
     box-shadow: 0 12px 30px rgba(0,0,0,0.5), inset 0 -8px 24px rgba(255,255,255,0.02);
-    animation: spin 3s linear infinite;
+    animation: spin 6s linear infinite;
     flex: 0 0 auto;
   }
   @keyframes spin{ from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
 
-  .pie .label {
-    position:absolute;
-    color:#fff;
-    font-weight:800;
-    text-shadow:0 3px 10px rgba(0,0,0,0.6);
-    font-size: clamp(1.6vmin, 2.4vmin, 4vmin);
-    pointer-events:none;
-  }
-  .label.a{ top:12%; left:50%; transform:translate(-50%,-20%); }
-  .label.b{ right:12%; top:50%; transform:translate(20%,-50%); }
-  .label.c{ left:50%; bottom:12%; transform:translate(-50%,20%); }
-
-  /* MECH2 buttons */
+  /* Mech2 */
   .mech2 {
     display:flex;
     gap: calc(var(--vh) * 1.2);
@@ -165,7 +160,7 @@
   /* Shift panel */
   .shift-panel {
     position: absolute;
-    bottom: calc(var(--vh) * 2.4);
+    bottom: 15%;
     left: 50%;
     transform: translateX(-50%) translateY(100%);
     width: min(92vw, 1000px);
@@ -211,14 +206,11 @@
     background: linear-gradient(135deg,#e53e3e,#a02a2a);
   }
 
-  @media(max-height:520px){
-    header{ padding:6px 8px }
-    .main-title{ font-size: clamp(2.2vmin, 3.6vmin, 5vmin) }
-  }
   @media(max-width:640px){
     .visual{ gap: calc(var(--vh) * 1.1); flex-direction:column-reverse;}
     .mech2{ flex-direction:column; gap: calc(var(--vh)*0.8); }
-    .shift-panel{ bottom: calc(var(--vh) * 1.6); padding: calc(var(--vh) * 0.9);}
+    .shift-panel{ bottom: 20%; }
+    .header-clock { align-items: flex-start; }
   }
 </style>
 </head>
@@ -230,31 +222,24 @@
     <div class="title">CRM Mechanical Checklist</div>
   </div>
   <div class="clock header-clock" aria-live="polite">
-    <div class="date" id="dateText">MM.DD.YYYY</div>
+    <div class="date" id="dateText"></div>
     <div class="time" id="timeBox"><span id="hhmm">00:00</span><span class="colon">:</span><span id="ss">00</span></div>
   </div>
 </header>
 
-<section class="hero" role="main" aria-label="Checklist dashboard">
+<section class="hero">
 
-  <h1 class="main-title">Ready to fill up the checklist</h1>
+  <h1 class="main-title">Welcome! HAPL Mechanical Team.</h1>
 
-  <div class="visual" aria-hidden="false">
-
-    <div class="pie" aria-hidden="true" role="img" aria-label="Rotating pie chart for shifts">
-      <div class="label a">A</div>
-      <div class="label b">B</div>
-      <div class="label c">C</div>
-    </div>
-
-    <div class="mech2" aria-label="Select plant">
-      <button class="mech-btn" data-plant="HAPL" id="btnHAPL">HAPL</button>
-      <button class="mech-btn" data-plant="CAPL" id="btnCAPL">CAPL</button>
+  <div class="visual">
+    <div class="pie" aria-hidden="true"></div>
+    <div class="mech2">
+      <button class="mech-btn" data-plant="HAPL" id="btnHAPL">Shift Checklist</button>
+      <button class="mech-btn" data-plant="CAPL" id="btnCAPL">Common folder</button>
     </div>
   </div>
 
-  <div id="shiftPanel" class="shift-panel" role="dialog" aria-modal="true" aria-hidden="true">
-  </div>
+  <div id="shiftPanel" class="shift-panel"></div>
 
 </section>
 
@@ -266,9 +251,16 @@
   function pad(n){ return n < 10 ? '0'+n : n; }
   function updateClock(){
     const now = new Date();
-    const mm = pad(now.getMonth()+1), dd = pad(now.getDate()), yyyy = now.getFullYear();
+
+    // Date format: SAT, 16 AUG 2025
+    const dayName = now.toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase();
+    const day = now.getDate();
+    const monthName = now.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
+    const year = now.getFullYear();
+    document.getElementById('dateText').textContent = `${dayName}, ${day} ${monthName} ${year}`;
+
+    // Time
     const hh = pad(now.getHours()), min = pad(now.getMinutes()), ss = pad(now.getSeconds());
-    document.getElementById('dateText').textContent = `${mm}.${dd}.${yyyy}`;
     document.getElementById('hhmm').textContent = `${hh}:${min}`;
     document.getElementById('ss').textContent = ss;
   }
@@ -278,26 +270,49 @@
   const panel = document.getElementById('shiftPanel');
   const LINKS = {
     HAPL: {
-      A: 'https://forms.office.com/Pages/ResponsePage.aspx?id=PIcGlfc2dUG6n9afC2Arg8z21hqHuwhAi2nAEngdb9tURUdBNlNVT1VCVjBCUzFXMlA2UVNSSVNHSS4u', B: 'LINK_HAPL_B', C: 'LINK_HAPL_C', RESP: 'https://jindalstainless0-my.sharepoint.com/:x:/g/personal/abhishek_dadsena_jindalstainless_com/EdfbzTbFciBEgiDAjb8Rm4sBlAa8koVDHu6CmHhgCQ4fqQ?e=dDv4I4'
+      A: 'https://forms.office.com/Pages/ResponsePage.aspx?id=PIcGlfc2dUG6n9afC2Arg8z21hqHuwhAi2nAEngdb9tURUdBNlNVT1VCVjBCUzFXMlA2UVNSSVNHSS4u',
+      B: 'https://forms.office.com/Pages/ResponsePage.aspx?id=PIcGlfc2dUG6n9afC2Arg8z21hqHuwhAi2nAEngdb9tUNEtKU1Y5MU00UTc0Qkg1UDI5OVY1VkxBQS4u',
+      C: 'https://forms.office.com/Pages/ResponsePage.aspx?id=PIcGlfc2dUG6n9afC2Arg8z21hqHuwhAi2nAEngdb9tUNE5MVEcwNVVHOERLVzVQNTRUNDAxSkxFSi4u',
+      RESP: 'https://jindalstainless0-my.sharepoint.com/:x:/g/personal/abhishek_dadsena_jindalstainless_com/EdfbzTbFciBEgiDAjb8Rm4sBlAa8koVDHu6CmHhgCQ4fqQ?e=dDv4I4'
     },
     CAPL: {
-      A: 'LINK_CAPL_A', B: 'LINK_CAPL_B', C: 'LINK_CAPL_C', RESP: 'LINK_CAPL_RESP'
+      A: 'https://jindalstainless0-my.sharepoint.com/:x:/g/personal/abhishek_dadsena_jindalstainless_com/EWYZ0BvfztdLlPhlPWurfKwBBdOfA1wtNtNQFAsiUnZ7KA?e=QsR5CR',
+      B: 'https://jindalstainless0-my.sharepoint.com/:x:/g/personal/abhishek_dadsena_jindalstainless_com/EaYgO0sAIdZOqXCHf6cRsCYBO1z4oelFic3n2moK080mUg?e=jy0ORt',
+      C: 'https://jindalstainless0-my.sharepoint.com/:x:/g/personal/abhishek_dadsena_jindalstainless_com/ESd_vFfNsnVOlG4MP1rXDlUBWEkWZp_WuTeU9E0abj2yxw?e=9xJDR2',
+      RESP: 'https://jindalstainless0-my.sharepoint.com/:f:/g/personal/abhishek_dadsena_jindalstainless_com/ElDrK3z1RnJEgv4donzsgNMBxtu0JqgYDzj0T3BLhQj5SA?e=aBzzBy'
     }
   };
 
   function openShiftPanel(plant){
-    panel.innerHTML = `
-      <div style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:1vmin;flex-wrap:wrap">
-        <div style="font-weight:800;font-size:clamp(1.6vmin,2.2vmin,3.2vmin)"> ${plant} - Select Shift </div>
-        <div style="display:flex;gap:1vmin;flex-wrap:wrap;justify-content:center">
-          <a class="shift-btn" href="${LINKS[plant].A}" target="_blank" rel="noopener">A SHIFT</a>
-          <a class="shift-btn" href="${LINKS[plant].B}" target="_blank" rel="noopener">B SHIFT</a>
-          <a class="shift-btn" href="${LINKS[plant].C}" target="_blank" rel="noopener">C SHIFT</a>
-          <a class="shift-btn" href="${LINKS[plant].RESP}" target="_blank" rel="noopener">RESPONSES</a>
-          <button class="shift-btn shift-close" id="closePanel">BACK</button>
+    let content = '';
+    if(plant === 'HAPL'){
+      content = `
+        <div style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:1vmin;flex-wrap:wrap">
+          <div style="font-weight:800;font-size:clamp(1.6vmin,2.2vmin,3.2vmin)"> Shift Checklist - Select Shift </div>
+          <div style="display:flex;gap:1vmin;flex-wrap:wrap;justify-content:center">
+            <a class="shift-btn" href="${LINKS[plant].A}" target="_blank" rel="noopener">A SHIFT</a>
+            <a class="shift-btn" href="${LINKS[plant].B}" target="_blank" rel="noopener">B SHIFT</a>
+            <a class="shift-btn" href="${LINKS[plant].C}" target="_blank" rel="noopener">C SHIFT</a>
+            <a class="shift-btn" href="${LINKS[plant].RESP}" target="_blank" rel="noopener">RESPONSES</a>
+            <button class="shift-btn shift-close" id="closePanel">BACK</button>
+          </div>
         </div>
-      </div>
-    `;
+      `;
+    } else if(plant === 'CAPL'){
+      content = `
+        <div style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:1vmin;flex-wrap:wrap">
+          <div style="font-weight:800;font-size:clamp(1.6vmin,2.2vmin,3.2vmin)"> Documents </div>
+          <div style="display:flex;gap:1vmin;flex-wrap:wrap;justify-content:center">
+            <a class="shift-btn" href="${LINKS[plant].A}" target="_blank" rel="noopener">Lubrication Schedule</a>
+            <a class="shift-btn" href="${LINKS[plant].B}" target="_blank" rel="noopener">Spare List</a>
+            <a class="shift-btn" href="${LINKS[plant].C}" target="_blank" rel="noopener">Delay Analysis</a>
+            <a class="shift-btn" href="${LINKS[plant].RESP}" target="_blank" rel="noopener">TEAM Master</a>
+            <button class="shift-btn shift-close" id="closePanel">BACK</button>
+          </div>
+        </div>
+      `;
+    }
+    panel.innerHTML = content;
     panel.classList.add('open');
     panel.setAttribute('aria-hidden','false');
     document.getElementById('closePanel').addEventListener('click', closeShiftPanel);
